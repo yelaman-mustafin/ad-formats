@@ -1,1 +1,7 @@
-# ad-formats-
+# ad-formats
+EN:
+A free tool for marketers and media buyers. It brings together 26 ad formats from Meta, TikTok and Google in one place: aspect ratios, sizes, duration and text limits. Each format has a phone preview that shows how the ad looks, including the areas covered by the app interface. Pick the formats you need, set the number of creatives and fill in a short brief. The site builds a creative brief for your designer that you can copy as text or download as a PDF. Mobile-friendly, available in Russian, Kazakh and English.
+ҚАЗ:
+Маркетологтар мен трафик-менеджерлерге арналған тегін құрал. Meta, TikTok және Google-дың 26 жарнама форматы бір жерге жиналған: пропорциялар, өлшемдер, ұзақтығы және мәтін шектеулері. Әр форматтың превьюі бар — жарнама телефонда қалай көрінетіні және интерфейс жабатын аймақтар. Қажетті форматтарды таңдап, креативтер санын көрсетіп, қысқа брифті толтырыңыз. Сайт дизайнерге арналған ТТ құрастырады: оны мәтін ретінде көшіруге немесе PDF түрінде жүктеуге болады. Телефоннан жұмыс істейді, орыс, қазақ және ағылшын тілдерінде қолжетімді.
+RU:
+Бесплатный инструмент для маркетологов и трафик-менеджеров. В одном месте собраны 26 рекламных форматов Meta, TikTok и Google: пропорции, размеры, длительность и лимиты текста. Для каждого формата есть превью — как объявление выглядит в телефоне, с зонами, которые перекрывает интерфейс. Выберите нужные форматы, укажите количество креативов и заполните короткий бриф. Сайт соберёт ТЗ для дизайнера: его можно скопировать текстом или скачать в PDF. Работает с телефона, доступен на русском, казахском и английском.
