@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Справочник по рекламным форматам</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F4; --paper:#FFFFFF; --ink:#18212C; --muted:#5B6776; --line:#D5DCE3; --soft:#F5F7F9;
+  --meta:#0866FF; --tiktok:#E8184A; --google:#1E8E3E;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10161D; --paper:#18212B; --ink:#E6ECF2; --muted:#9AA7B5; --line:#2A3542; --soft:#1F2934;
+    --meta:#4D8DFF; --tiktok:#FF4D73; --google:#3FBF63;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10161D; --paper:#18212B; --ink:#E6ECF2; --muted:#9AA7B5; --line:#2A3542; --soft:#1F2934;
+  --meta:#4D8DFF; --tiktok:#FF4D73; --google:#3FBF63;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+.wrap{max-width:820px;margin:0 auto;padding:0 14px}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--meta);outline-offset:2px}
+
+header{padding:22px 0 12px}
+h1{font-size:clamp(1.6rem,6vw,2.4rem);line-height:1.05;font-weight:800;letter-spacing:-.025em;margin:0 0 6px}
+.lede{color:var(--muted);margin:0;font-size:.95rem;max-width:56ch}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;max-width:820px;margin:0 auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--paper);padding:7px 12px;border-radius:999px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;min-height:38px}
+.chip .dot{width:9px;height:9px;border-radius:50%}
+.chip .n{color:var(--muted);font-weight:500}
+.chip[aria-pressed="false"]{opacity:.45;background:transparent}
+
+h2.step{font-size:1.15rem;font-weight:800;margin:26px 0 10px;display:flex;gap:10px;align-items:center}
+h2.step span{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);display:inline-grid;place-items:center;font-size:.85rem;flex:none}
+
+.group{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.gh{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;min-height:56px;border:none;background:var(--soft);text-align:left;cursor:pointer}
+.group.open .gh{border-bottom:1px solid var(--line)}
+.group:not(.open) .gb{display:none}
+.gh .chev{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);font-size:.8rem;flex:none;transition:transform .2s}
+.group.open .gh .chev{transform:rotate(180deg)}
+@media (prefers-reduced-motion:reduce){.gh .chev{transition:none}}
+.gh b{font-size:1rem}
+.gh .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.gh small{color:var(--muted);margin-left:auto;font-size:.85rem}
+
+.row{border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.rh{display:flex;align-items:center;gap:6px;padding:6px 6px 6px 0;min-height:56px}
+.tgl{flex:1;min-width:0;text-align:left;background:none;border:none;padding:6px 6px 6px 14px;cursor:pointer;display:flex;flex-direction:column;gap:1px;border-left:3px solid var(--c)}
+.tgl .nm{font-weight:600;font-size:.98rem;line-height:1.25}
+.tgl .rt{color:var(--muted);font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tgl .rt::after{content:" ▾";}
+.row.open .tgl .rt::after{content:" ▴"}
+.step-q{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.step-q button{width:38px;height:38px;border:none;background:var(--soft);font-size:1.2rem;cursor:pointer;line-height:1}
+.step-q output{min-width:30px;text-align:center;font-weight:700;font-size:.95rem}
+.rm{width:38px;height:38px;flex:none;border:none;background:none;color:var(--muted);font-size:1.3rem;cursor:pointer;border-radius:10px}
+.rm:hover{background:var(--soft);color:var(--ink)}
+.rb{padding:0 14px 14px 17px;display:none}
+.row.open .rb{display:block}
+.rb p{margin:0 0 8px;color:var(--muted);font-size:.9rem}
+.rb dl{margin:0 0 10px;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:.88rem}
+.rb dt{color:var(--muted)}
+.rb dd{margin:0}
+.rb .flag{font-size:.82rem;color:#B26A00;margin:0 0 10px}
+
+input,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.rb input{background:var(--soft)}
+textarea{resize:vertical}
+
+.hidden-list{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0}
+.restore{font-size:.88rem;border:1px dashed var(--line);background:transparent;padding:7px 12px;border-radius:999px;cursor:pointer;min-height:36px}
+.restore b{color:var(--c);font-weight:600}
+.ghost{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:.88rem;padding:6px}
+.empty{color:var(--muted);margin:0;font-size:.9rem}
+
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fields label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted)}
+.fields .wide{grid-column:1/-1}
+
+.tabs{display:flex;gap:4px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+.tabs button{font-weight:600;background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);padding:8px 12px;cursor:pointer;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+#pane-vis{background:#DCE2E9;border-radius:12px;padding:8px;max-height:75vh;overflow:auto}
+#tz{font-size:14px;min-height:300px;line-height:1.5}
+
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--paper);border-top:1px solid var(--line);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+.dock .in{max-width:820px;margin:0 auto;display:flex;align-items:center;gap:8px}
+.dock .sum{flex:1;min-width:0;font-size:.85rem;color:var(--muted);line-height:1.2}
+.dock .sum b{display:block;color:var(--ink);font-size:1.05rem}
+.btn{font-weight:600;border-radius:999px;padding:0 16px;height:44px;cursor:pointer;border:1.5px solid var(--ink);background:transparent;white-space:nowrap}
+.btn.pri{background:var(--ink);color:var(--paper)}
+.btn[disabled]{opacity:.5;cursor:progress}
+.status{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);
+  padding:8px 14px;border-radius:10px;font-size:.88rem;max-width:calc(100% - 28px);z-index:11;opacity:0;pointer-events:none;transition:opacity .2s}
+.status.on{opacity:1}
+.rbg{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+@media (max-width:560px){.rbg{grid-template-columns:1fr}.pv{justify-self:center}}
+.pv{display:flex;flex-direction:column;align-items:center;gap:8px}
+.szt{display:flex;gap:6px;align-items:center;font-size:.82rem;color:var(--muted);cursor:pointer}
+.szt input{width:18px;height:18px;padding:0}
+.phone{zoom:.72;position:relative;width:214px;padding:6px;border-radius:44px;
+  background:linear-gradient(140deg,#5b5f66 0%,#1d1f23 18%,#0c0d0f 50%,#25282d 82%,#6a6e75 100%);
+  box-shadow:inset 0 0 0 1.5px #8a8f97,inset 0 0 0 3px #0a0a0a,0 14px 30px rgba(0,0,0,.22),0 3px 8px rgba(0,0,0,.15)}
+.phone::before{content:"";position:absolute;right:-3px;top:118px;width:3px;height:64px;border-radius:0 2px 2px 0;background:linear-gradient(90deg,#2a2c30,#6a6e75)}
+.phone::after{content:"";position:absolute;left:-3px;top:96px;width:3px;height:36px;border-radius:2px 0 0 2px;background:linear-gradient(270deg,#2a2c30,#6a6e75);box-shadow:0 46px 0 #4a4d52}
+.phone .scr{position:relative;background:#fff;color:#111;font-size:11px;line-height:1.35;border-radius:38px;overflow:hidden;aspect-ratio:9/19.5;padding-top:34px}
+.phone .scr::after{content:"";position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:76px;height:4px;border-radius:3px;background:#111;z-index:4}
+.phone.dark .scr{background:#000;padding:0}
+.phone.dark .scr::after{background:#fff}
+.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:64px;height:19px;border-radius:12px;background:#000;z-index:5}
+.sbar-i{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:space-between;padding:2px 20px 0 26px;font-size:11.5px;font-weight:700;z-index:4;color:#111;letter-spacing:-.01em}
+.phone.dark .sbar-i{color:#fff}
+.sbar-i svg{display:block}
+.sbar-i .r{display:flex;gap:4px;align-items:center}
+.pv .ic{width:18px;height:18px;flex:none}
+.cr{position:relative;width:100%;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;font-weight:700;font-size:12px;overflow:hidden}
+.cr span{text-shadow:0 1px 3px rgba(0,0,0,.25)}
+.cr small{display:block;font-weight:500;font-size:9.5px;opacity:.9}
+.fh{display:flex;align-items:center;gap:7px;padding:7px 8px}
+.fh b{display:block;font-size:11px}.fh small{color:#6b7480;font-size:9.5px}
+.fh .more{margin-left:auto;color:#6b7480}
+.av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#C9D2DC,#8C99A8);flex:none;display:inline-block}
+.av.big{width:30px;height:30px;border:2px solid #fff}
+.ctab{display:flex;justify-content:space-between;align-items:center;padding:7px 9px;background:#F1F3F6;font-weight:600}
+.ctab.wa span:first-child{display:flex;gap:5px;align-items:center;color:#1E8E3E}
+.ctab .ic{width:13px;height:13px}
+.acts{display:flex;gap:10px;padding:7px 8px 3px}
+.cap{padding:0 8px;color:#333}
+.playb{position:absolute;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);display:grid;place-items:center}
+.dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.7);color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}
+.car{display:flex;gap:4px;overflow:hidden}.car .cr{flex:0 0 82%}
+.car-t{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;gap:6px}
+.car-t b{font-size:10.5px}
+.btnb{background:#E6E9EE;color:#111;border-radius:5px;padding:3px 8px;font-weight:600;font-size:10px;white-space:nowrap}
+.dotsr,.cdots{display:flex;gap:3px;justify-content:center;padding:4px 0}
+.dotsr i,.cdots i{width:5px;height:5px;border-radius:50%;background:#C9D2DC}.dotsr i.on{background:#0866FF}
+.cdots{position:absolute;top:40%;left:0;right:0}.cdots i{background:rgba(255,255,255,.5)}.cdots i.on{background:#fff}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:3px}
+.grid4 i{aspect-ratio:1;background:#E3E8EE;border-radius:3px}
+.prods{display:flex;gap:6px;padding:6px 8px;overflow:hidden}
+.pr{flex:0 0 42%;border:1px solid #E3E8EE;border-radius:7px;padding:5px}
+.pr i{display:block;aspect-ratio:1;background:#EEF1F4;border-radius:4px;margin-bottom:4px}
+.pr b{display:block;font-size:10px}.pr span{font-weight:700;font-size:10.5px}
+.form{margin:8px;border:1px solid #E3E8EE;border-radius:10px;padding:9px;display:flex;flex-direction:column;gap:5px}
+.form b{font-size:12px}.form small{color:#6b7480;font-size:9.5px}
+.form i{border:1px solid #D5DCE3;border-radius:5px;padding:4px 6px;color:#8C99A8;font-style:normal}
+.fbtn{color:#fff;text-align:center;border-radius:6px;padding:6px;font-weight:600}
+.vv{position:relative;height:100%;overflow:hidden;color:#fff}
+.vlab{position:absolute;top:42%;left:0;right:0;text-align:center;font-weight:700;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.vlab small{display:block;font-weight:500;font-size:9.5px}
+.prog-top{position:absolute;top:36px;left:6px;right:6px;display:flex;gap:3px}
+.prog-top i{flex:1;height:2px;background:rgba(255,255,255,.5);border-radius:2px}.prog-top i:first-child{background:#fff}
+.vh{position:absolute;top:44px;left:8px;display:flex;align-items:center;gap:6px}
+.vh small{opacity:.85;font-size:9.5px}
+.swipe{position:absolute;bottom:24px;left:0;right:0;text-align:center;font-weight:700;line-height:1}
+.swipe span{display:inline-block;margin-top:4px;background:#fff;color:#111;border-radius:999px;padding:5px 14px;font-size:10.5px}
+.rail{position:absolute;right:6px;bottom:30%;display:flex;flex-direction:column;gap:11px;align-items:center}
+.rail span{display:flex;flex-direction:column;align-items:center}.rail .ic{width:22px;height:22px}
+.rail em{font-style:normal;font-size:8.5px;font-weight:600}
+.vb{position:absolute;left:8px;right:44px;bottom:22px;font-size:10.5px}
+.pv .vb p{margin:2px 0;opacity:.95;color:#fff;font-size:10.5px;line-height:1.3}.vb .mus{font-size:9.5px}
+.tag{background:rgba(255,255,255,.25);border-radius:3px;padding:0 4px;font-size:9px;font-weight:600}
+.vcta{margin-top:6px;border-radius:5px;padding:6px;text-align:center;font-weight:700;color:#fff;margin-right:-36px}
+.vcta.light{background:rgba(255,255,255,.22);text-align:left}
+.vtop{position:absolute;top:38px;left:8px;right:8px;display:flex;justify-content:space-between;font-size:9.5px;font-weight:600}
+.vtop.light{position:static;padding:8px;color:#111;font-size:11px}
+.skip2{background:rgba(0,0,0,.45);border-radius:999px;padding:2px 8px}
+.tray{position:absolute;bottom:40px;left:0;right:0;display:flex;gap:8px;justify-content:center;align-items:center}
+.tray i{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid transparent}
+.tray i.on{width:38px;height:38px;background:rgba(255,255,255,.6);border-width:3px}
+.trayl{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:9.5px;font-weight:700}
+.sz{position:absolute;display:none;background:repeating-linear-gradient(45deg,rgba(232,24,74,.45) 0 4px,rgba(232,24,74,.15) 4px 8px);outline:1px dashed #fff}
+.pv.safe .sz{display:block}
+.pl{position:relative;background:#000}.pl .cr{border-radius:0}
+.badge{position:absolute;left:6px;bottom:8px;background:#FBBC04;color:#111;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px}
+.skip{position:absolute;right:0;bottom:12px;background:rgba(0,0,0,.75);color:#fff;font-size:9.5px;padding:5px 8px;border:1px solid rgba(255,255,255,.4);border-right:0}
+.prog{position:absolute;left:0;bottom:0;height:3px;width:40%;background:#FBBC04}
+.comp{display:flex;align-items:center;gap:7px;padding:8px;border-bottom:1px solid #EEF1F4}
+.comp b{display:block;font-size:11px}.comp small{color:#6b7480;font-size:9.5px}.comp .btnb{margin-left:auto;background:#065FD4;color:#fff}
+.lines{padding:8px;display:flex;flex-direction:column;gap:5px}.lines i{display:block;height:6px;border-radius:3px;background:#E3E8EE}
+.sbar{margin:8px;border:1px solid #D5DCE3;border-radius:999px;padding:5px 10px;display:flex;gap:6px;align-items:center;color:#6b7480}
+.sbar .ic{width:13px;height:13px}
+.serp{padding:6px 10px 8px;border-bottom:1px solid #EEF1F4}
+.serp small{font-size:9.5px;color:#202124}.sh{color:#1a0dab;font-size:12.5px;line-height:1.25;margin:2px 0}
+.sd{color:#4d5156;font-size:10px}.sl{display:flex;gap:8px;margin-top:4px;color:#1a0dab;font-size:10px}
+.org{padding:8px 10px;display:flex;flex-direction:column;gap:5px}.org i{display:block;height:6px;border-radius:3px;background:#E3E8EE}
+.banner{margin:6px 8px;border:1px solid #E3E8EE;border-radius:6px;overflow:hidden}
+.banner small{display:block;font-size:8.5px;color:#6b7480;padding:2px 5px}
+.bt{display:flex;align-items:center;gap:6px;padding:6px}.bt b{font-size:10px;flex:1}
+.logo{width:20px;height:20px;border-radius:4px;background:#C9D2DC;flex:none}
+.yt{padding:0 0 4px}.ytt{display:flex;gap:7px;padding:7px 8px}.ytt b{display:block;font-size:10.5px}.ytt small{color:#6b7480;font-size:9.5px}
+.dg{margin:8px;border-radius:10px;overflow:hidden;border:1px solid #E3E8EE}
+.dgt{padding:7px 8px 0}.dgt b{display:block;font-size:11px}.dgt small{color:#6b7480;font-size:9.5px}.dgb{padding:6px 8px 8px}
+.pm-l{padding:6px 10px 0;font-size:9px;font-weight:700;color:#6b7480;text-transform:uppercase;letter-spacing:.04em}
+.pl.sm{margin:4px 8px;border-radius:6px;overflow:hidden}
+
+footer{color:var(--muted);font-size:.8rem;padding:20px 0}
+
+@media (max-width:560px){
+  .fields{grid-template-columns:1fr}
+  .btn{padding:0 13px}
+  .btn .long{display:none}
+}
+@media (min-width:561px){ .btn .short{display:none} }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Справочник по рекламным форматам</h1>
+  <p class="lede">Meta, TikTok и Google: как выглядит объявление, размеры и лимиты. Нажмите на формат, чтобы увидеть превью; отметьте количество — получите ТЗ в PDF.</p>
+</header>
+
+<nav class="bar" aria-label="Платформы"><div class="chips" id="chips"></div></nav>
+
+<main class="wrap">
+  <h2 class="step" id="s1"><span>1</span>Форматы и количество</h2>
+  <div id="list"></div>
+  <div id="hiddenWrap"></div>
+
+  <h2 class="step" id="s2"><span>2</span>Бриф</h2>
+  <div class="fields">
+    <label class="wide">Проект / клиент<input id="b-project" placeholder="Например, Tareda — ТОО для нерезидентов" autocomplete="off"></label>
+    <label>Цель<input id="b-goal" placeholder="Лиды, трафик, охват" autocomplete="off"></label>
+    <label>Гео и аудитория<input id="b-geo" placeholder="Алматы; 25–45" autocomplete="off"></label>
+    <label>Бюджет и период<input id="b-budget" placeholder="500 000 ₸, ноябрь" autocomplete="off"></label>
+    <label>Срок сдачи креативов<input id="b-deadline" placeholder="до 25 октября" autocomplete="off"></label>
+    <label>Языки<input id="b-lang" placeholder="RU, KZ" autocomplete="off"></label>
+    <label>Ответственный<input id="b-owner" placeholder="Имя, контакт" autocomplete="off"></label>
+    <label class="wide">Посадочная страница<input id="b-url" type="url" inputmode="url" placeholder="https://" autocomplete="off"></label>
+    <label class="wide">Комментарий<textarea id="b-note" rows="2" placeholder="УТП, ключевое сообщение, ограничения"></textarea></label>
+  </div>
+
+  <h2 class="step" id="s3"><span>3</span>Готовое ТЗ</h2>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="vis">Наглядно</button>
+    <button role="tab" aria-selected="false" data-tab="txt">Текстом</button>
+  </div>
+  <div id="pane-vis"><div class="tzdoc" id="tzvis"></div></div>
+  <div id="pane-txt" hidden><textarea id="tz" readonly aria-label="ТЗ текстом"></textarea></div>
+  <footer>Данные на осень 2026. Платформы меняют требования — сверяйтесь со справкой Meta, TikTok и Google Ads перед запуском.</footer>
+</main>
+
+<div class="dock">
+  <div class="in">
+    <div class="sum" id="sum"></div>
+    <button class="btn" data-copy><span class="long">Скопировать текст</span><span class="short">Текст</span></button>
+    <button class="btn pri" data-pdf id="pdfBtn">Скачать PDF</button>
+  </div>
+</div>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+
+<script>
+const PLATFORMS = {
+  meta:   {name:"Meta",   sub:"Facebook, Instagram, Messenger", color:"var(--meta)"},
+  tiktok: {name:"TikTok", sub:"TikTok, Pangle",                  color:"var(--tiktok)"},
+  google: {name:"Google", sub:"Поиск, КМС, YouTube",             color:"var(--google)"}
+};
+
+const FORMATS = [
+  // META
+  {id:"m-img", p:"meta", name:"Изображение в ленте", ratios:["1:1","4:5"], desc:"Одна картинка в ленте Facebook и Instagram.",
+   specs:[["Размер","1080×1080 или 1080×1350"],["Файл","JPG, PNG, до 30 МБ"],["Текст","основной до 125 симв., заголовок до 40"]]},
+  {id:"m-vid", p:"meta", name:"Видео в ленте", ratios:["4:5","1:1"], desc:"Видео в лентах Facebook и Instagram, по умолчанию без звука.",
+   specs:[["Размер","1080×1350 или 1080×1080"],["Длительность","до 241 мин, лучше 15 сек и меньше"],["Файл","MP4, MOV, до 4 ГБ"],["Совет","субтитры обязательны"]]},
+  {id:"m-stories", p:"meta", name:"Stories", ratios:["9:16"], desc:"Полноэкранный вертикальный формат между историями.",
+   specs:[["Размер","1080×1920"],["Видео","до 60 сек на карточку"],["Безопасная зона","~14% сверху и снизу без текста"]]},
+  {id:"m-reels", p:"meta", name:"Reels", ratios:["9:16"], desc:"Вертикальное видео в ленте Reels Instagram и Facebook.",
+   specs:[["Размер","1080×1920"],["Длительность","лучше 15–30 сек"],["Безопасная зона","нижние ~35% заняты интерфейсом"]]},
+  {id:"m-carousel", p:"meta", name:"Карусель", ratios:["1:1","4:5"], desc:"От 2 до 10 карточек, у каждой своя ссылка.",
+   specs:[["Карточки","2–10 изображений или видео"],["Размер","1080×1080 (4:5 в Instagram)"],["Текст","заголовок карточки до 40 симв."]]},
+  {id:"m-collection", p:"meta", name:"Коллекция", ratios:["1:1"], desc:"Обложка и 4 товара, по тапу открывается Instant Experience. Только мобильные.",
+   specs:[["Нужно","каталог товаров"],["Обложка","изображение или видео"],["Текст","до 125 симв."]]},
+  {id:"m-dpa", p:"meta", name:"Advantage+ каталог", kind:"catalog", desc:"Динамическая реклама товаров из каталога по поведению пользователя.",
+   specs:[["Нужно","каталог и пиксель / Conversions API"],["Шаблон","одно изображение или карусель"]]},
+  {id:"m-lead", p:"meta", name:"Лид-форма (Instant Form)", kind:"text", desc:"Форма заявки внутри Facebook/Instagram, поля заполняются автоматически.",
+   specs:[["Креатив","любой: изображение, видео, карусель"],["Поля","имя, телефон, email + свои вопросы"],["Нужно","ссылка на политику конфиденциальности"]]},
+  {id:"m-ctm", p:"meta", name:"Переход в WhatsApp / Direct", ratios:["1:1","9:16"], desc:"Кнопка открывает диалог в WhatsApp, Instagram Direct или Messenger.",
+   specs:[["Нужно","подключённый WhatsApp Business или аккаунт Instagram"],["Шаблон","приветствие и быстрые вопросы"]]},
+
+  // TIKTOK
+  {id:"t-infeed", p:"tiktok", name:"In-Feed видео", ratios:["9:16"], desc:"Нативное видео в ленте «Для вас». Основной аукционный формат.",
+   specs:[["Размер","1080×1920 (также 1:1, 16:9)"],["Длительность","5–60 сек, лучше 21–34"],["Файл","MP4, MOV, до 500 МБ"],["Текст","до 100 симв."]]},
+  {id:"t-spark", p:"tiktok", name:"Spark Ads", ratios:["9:16"], desc:"Продвижение органических постов своего аккаунта или креатора. Лайки и подписки остаются на аккаунте.",
+   specs:[["Нужно","код авторизации поста или привязка аккаунта"],["Креатив","готовый пост"]]},
+  {id:"t-carousel", p:"tiktok", name:"Карусель изображений", ratios:["9:16","1:1"], desc:"Серия изображений с музыкой, листается свайпом.",
+   specs:[["Изображения","до 35"],["Звук","музыка обязательна"],["Текст","до 100 симв."]]},
+  {id:"t-topview", p:"tiktok", name:"TopView", ratios:["9:16"], desc:"Первое видео при открытии приложения. Покупается по резерву через менеджера.",
+   specs:[["Длительность","до 60 сек"],["Размер","1080×1920"],["Покупка","резерв, фиксированная цена"]], flag:"Доступность в регионе уточняйте у менеджера"},
+  {id:"t-takeover", p:"tiktok", name:"Brand Takeover", ratios:["9:16"], desc:"Полноэкранная заставка при открытии, 3–5 секунд. Один рекламодатель в день на категорию.",
+   specs:[["Длительность","изображение 3 сек, видео 3–5 сек"],["Покупка","резерв"]], flag:"Формат доступен не во всех регионах"},
+  {id:"t-effect", p:"tiktok", name:"Брендированный эффект", kind:"catalog", desc:"AR-эффект или фильтр, который пользователи применяют в своих видео.",
+   specs:[["Срок","обычно 10 дней в разделе эффектов"],["Покупка","через менеджера"]]},
+  {id:"t-lead", p:"tiktok", name:"Лидогенерация (Instant Form)", kind:"text", desc:"Встроенная форма заявки, открывается без выхода из TikTok.",
+   specs:[["Креатив","In-Feed видео"],["Поля","предзаполненные и свои вопросы"],["Нужно","ссылка на политику конфиденциальности"]]},
+
+  // GOOGLE
+  {id:"g-rsa", p:"google", name:"Адаптивное поисковое объявление", kind:"text", desc:"Текстовое объявление в поиске. Google сам собирает комбинации из заголовков и описаний.",
+   specs:[["Заголовки","до 15, по 30 симв."],["Описания","до 4, по 90 симв."],["Путь","2 поля по 15 симв."]]},
+  {id:"g-rda", p:"google", name:"Адаптивное медийное", ratios:["1.91:1","1:1"], desc:"Баннеры в КМС, собираются автоматически из ваших ассетов.",
+   specs:[["Изображения","1200×628 и 1200×1200"],["Логотип","1200×1200, опционально 1200×300"],["Текст","5 заголовков по 30, длинный 90, 5 описаний по 90"]]},
+  {id:"g-skip", p:"google", name:"YouTube In-stream с пропуском", ratios:["16:9"], desc:"Видео до, во время или после ролика. Пропуск через 5 секунд.",
+   specs:[["Длительность","лучше до 3 мин"],["Оплата","за просмотр 30 сек или взаимодействие"],["Размер","1920×1080"]]},
+  {id:"g-nonskip", p:"google", name:"YouTube In-stream без пропуска", ratios:["16:9"], desc:"Видео, которое нельзя пропустить.",
+   specs:[["Длительность","до 15 сек (на ТВ-экранах до 30)"],["Оплата","за тысячу показов"]]},
+  {id:"g-bumper", p:"google", name:"Bumper", ratios:["16:9"], desc:"Короткий ролик без пропуска для охвата и частоты.",
+   specs:[["Длительность","до 6 сек"],["Оплата","за тысячу показов"]]},
+  {id:"g-infeed", p:"google", name:"YouTube In-feed", ratios:["16:9"], desc:"Превью видео в поиске YouTube, рекомендациях и главной.",
+   specs:[["Креатив","видео + заголовок + 2 строки описания"],["Оплата","за клик по превью"]]},
+  {id:"g-shorts", p:"google", name:"YouTube Shorts", ratios:["9:16"], desc:"Вертикальная реклама между Shorts.",
+   specs:[["Размер","1080×1920"],["Длительность","лучше до 60 сек"],["Запуск","через Demand Gen, видео или PMax"]]},
+  {id:"g-dg", p:"google", name:"Demand Gen", ratios:["1.91:1","1:1","4:5"], desc:"Изображения, карусели и видео в YouTube, Discover и Gmail.",
+   specs:[["Изображения","1200×628, 1200×1200, 960×1200"],["Карусель","2–10 карточек"],["Текст","заголовки 40, описания 90"]]},
+  {id:"g-pmax", p:"google", name:"Performance Max", ratios:["1.91:1","1:1","4:5","9:16"], desc:"Одна кампания на все каналы Google, креативы собираются из группы ассетов.",
+   specs:[["Заголовки","до 15 по 30 симв., до 5 длинных по 90"],["Описания","до 5 по 90, одно до 60"],["Медиа","до 20 изображений, до 5 видео, логотипы"]]},
+  {id:"g-shopping", p:"google", name:"Торговые объявления", kind:"catalog", desc:"Карточки товаров с ценой и фото из фида Merchant Center.",
+   specs:[["Нужно","аккаунт и фид Merchant Center"],["Изображение","от 100×100, лучше 800×800"]], flag:"Доступность зависит от страны показа"}
+];
+const SIZE = {"1:1":"1080×1080","4:5":"1080×1350","9:16":"1080×1920","16:9":"1920×1080","1.91:1":"1200×628"};
+const SIZE_OVR = {"g-rda":{"1:1":"1200×1200"},"g-pmax":{"1:1":"1200×1200","4:5":"960×1200"},"g-dg":{"1:1":"1200×1200","4:5":"960×1200"}};
+// Зоны интерфейса в процентах (приблизительно)
+const SAFE = {
+  "m-stories":{t:14,b:14}, "m-reels":{t:14,b:35,r:12},
+  "t-infeed":{t:8,b:20,r:12}, "t-spark":{t:8,b:20,r:12}, "t-topview":{t:8,b:20,r:12}, "t-carousel":{t:8,b:20,r:12},
+  "g-shorts":{t:8,b:25,r:12}
+};
+const PCOL = {meta:"#0866FF", tiktok:"#E8184A", google:"#1E8E3E"};
+const sizeOf = (f,r)=> (SIZE_OVR[f.id]&&SIZE_OVR[f.id][r]) || SIZE[r] || "";
+
+let MKID = 0;
+function mockSVG(f, r, maxW, maxH, withSafe){
+  const pid = "h" + (++MKID);
+  const [a,b] = r.split(":").map(Number);
+  let w = maxW, h = maxW*b/a;
+  if(h > maxH){ h = maxH; w = maxH*a/b; }
+  w = Math.round(w); h = Math.round(h);
+  const s = withSafe && SAFE[f.id] && r==="9:16" ? SAFE[f.id] : null;
+  const c = PCOL[f.p];
+  let z = "";
+  if(s){
+    if(s.t) z += `<rect x="0" y="0" width="${w}" height="${h*s.t/100}" fill="url(#${pid})"/>`;
+    if(s.b) z += `<rect x="0" y="${h-h*s.b/100}" width="${w}" height="${h*s.b/100}" fill="url(#${pid})"/>`;
+    if(s.r) z += `<rect x="${w-w*s.r/100}" y="${h*(s.t||0)/100}" width="${w*s.r/100}" height="${h-h*((s.t||0)+(s.b||0))/100}" fill="url(#${pid})"/>`;
+  }
+  const fs = maxW > 100 ? 12 : 9;
+  return `<svg class="mk" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${r} ${sizeOf(f,r)}">
+    <defs><pattern id="${pid}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#E8184A18"/><rect width="3" height="6" fill="#E8184A40"/></pattern></defs><rect x=".5" y=".5" width="${w-1}" height="${h-1}" rx="4" fill="#F3F5F8" stroke="${c}" stroke-width="1.5"/>${z}
+    <text x="${w/2}" y="${h/2-2}" text-anchor="middle" font-size="${fs+4}" font-weight="700" fill="${c}">${r}</text>
+    <text x="${w/2}" y="${h/2+fs+4}" text-anchor="middle" font-size="${fs}" fill="#5B6776">${sizeOf(f,r)}</text></svg>`;
+}
+function mockText(f){
+  if(f.id==="g-rsa") return `<div class="serp"><div class="sp-ad">Реклама · site.kz</div><div class="sp-h">Заголовок 1 | Заголовок 2 | Заголовок 3</div><div class="sp-d">Описание до 90 символов. Второе описание до 90 символов.</div><div class="sp-n">до 15 заголовков × 30 симв. · до 4 описаний × 90</div></div>`;
+  return `<div class="form"><div class="fm-h">Форма заявки</div><div class="fm-i">Имя</div><div class="fm-i">Телефон</div><div class="fm-i">Свой вопрос</div><div class="fm-b" style="background:${PCOL[f.p]}">Отправить</div></div>`;
+}
+function mockCatalog(f){
+  return `<div class="cat">${[1,2,3,4].map(()=>`<div><i style="background:${PCOL[f.p]}22"></i><b></b><s></s></div>`).join("")}</div>`;
+}
+function mockups(f){
+  if(f.kind==="text") return mockText(f);
+  if(f.kind==="catalog") return mockCatalog(f);
+  const [first, ...rest] = f.ratios;
+  return `<div class="mk-main">${mockSVG(f, first, 150, 230, true)}</div>` +
+    (rest.length ? `<div class="mk-rest">${rest.map(r=>mockSVG(f, r, 74, 110, true)).join("")}</div>` : "");
+}
+const slug = s => (s||"project").toLowerCase().replace(/[^a-zа-яё0-9]+/gi,"-").replace(/^-|-$/g,"").slice(0,24) || "project";
+
+const TZCSS = `
+.tzdoc{--ink:#18212C;--muted:#5B6776;--line:#D8DEE5;background:#fff;color:var(--ink);font-family:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45;border-radius:12px;padding:28px;max-width:960px;margin:0 auto}
+.tzdoc *{box-sizing:border-box}
+.tzdoc h1{font-size:28px;line-height:1.1;margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+.tzdoc .sub{color:var(--muted);margin:0 0 20px}
+.tzdoc .facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.tzdoc .facts div{background:#fff;padding:10px 12px}
+.tzdoc .facts span{display:block;font-size:12px;color:var(--muted)}
+.tzdoc .facts b{font-weight:600;font-size:14px;word-break:break-word}
+.tzdoc .facts .wide{grid-column:1/-1}
+.tzdoc .stats{display:flex;gap:24px;flex-wrap:wrap;margin:0 0 20px}
+.tzdoc .stats div{font-size:13px;color:var(--muted)}
+.tzdoc .stats b{display:block;font-size:30px;line-height:1;color:var(--ink);font-weight:800}
+.tzdoc .tbl{overflow-x:auto;margin-bottom:28px}
+.tzdoc table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+.tzdoc th{text-align:left;font-weight:600;color:var(--muted);border-bottom:2px solid var(--ink);padding:6px 8px}
+.tzdoc td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:top}
+.tzdoc td.q{font-weight:700;text-align:center}
+.tzdoc .pl{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.tzdoc h2{font-size:20px;margin:28px 0 12px;padding-left:10px;border-left:5px solid var(--c);font-weight:800}
+.tzdoc .fmt{display:grid;grid-template-columns:240px 1fr;gap:20px;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;break-inside:avoid}
+.tzdoc .vis{display:flex;gap:10px;align-items:flex-end;justify-content:center;background:#FAFBFC;border-radius:8px;padding:12px;min-height:150px;flex-wrap:wrap}
+.tzdoc .mk-rest{display:flex;flex-direction:column;gap:8px;align-items:center}
+.tzdoc .head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.tzdoc h3{margin:0;font-size:17px;font-weight:700}
+.tzdoc .qb{background:var(--c);color:#fff;border-radius:999px;padding:3px 12px;font-weight:700;font-size:14px;white-space:nowrap}
+.tzdoc .desc{color:var(--muted);font-size:13px;margin:4px 0 10px}
+.tzdoc dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:0;font-size:13px}
+.tzdoc dt{color:var(--muted)}
+.tzdoc dd{margin:0}
+.tzdoc .cm{margin-top:10px;background:#FFF8E1;border-radius:6px;padding:8px 10px;font-size:13px}
+.tzdoc .warn{margin-top:8px;font-size:12px;color:#9A5B00}
+.tzdoc .fn{margin-top:10px;font-size:12px;color:var(--muted)}
+.tzdoc .fn code{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:#F1F3F6;padding:1px 5px;border-radius:4px;word-break:break-all}
+.tzdoc .check{margin-top:10px;font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
+.tzdoc .check span::before{content:"";display:inline-block;width:12px;height:12px;border:1.5px solid var(--ink);border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tzdoc .legend{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);margin:-4px 0 16px}
+.tzdoc .legend i{width:22px;height:14px;border-radius:3px;background:repeating-linear-gradient(45deg,#E8184A55 0 3px,transparent 3px 6px);border:1px solid #E8184A88}
+.tzdoc .serp{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;font-size:12px}
+.tzdoc .sp-ad{color:#202124;font-size:11px}
+.tzdoc .sp-h{color:#1a0dab;font-size:14px;margin:2px 0}
+.tzdoc .sp-d{color:#4d5156}
+.tzdoc .sp-n{color:var(--muted);font-size:11px;margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+.tzdoc .form{width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;font-size:11px}
+.tzdoc .fm-h{font-weight:700;font-size:12px}
+.tzdoc .fm-i{border:1px solid var(--line);border-radius:5px;padding:4px 6px;color:var(--muted)}
+.tzdoc .fm-b{color:#fff;text-align:center;border-radius:5px;padding:5px;font-weight:600}
+.tzdoc .cat{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:150px}
+.tzdoc .cat div{background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px}
+.tzdoc .cat i{display:block;height:40px;border-radius:4px}
+.tzdoc .cat b{display:block;height:5px;background:#D8DEE5;border-radius:3px;margin-top:5px;width:80%}
+.tzdoc .cat s{display:block;height:5px;background:#18212C;border-radius:3px;margin-top:4px;width:40%}
+.tzdoc .foot{color:var(--muted);font-size:12px;margin-top:24px;border-top:1px solid var(--line);padding-top:12px}
+@media (max-width:640px){.tzdoc{padding:18px}.tzdoc .fmt{grid-template-columns:1fr}}
+@media print{.tzdoc{padding:0;border-radius:0}.noprint{display:none!important}}
+`;
+
+function tzHTML(){
+  const B = state.brief, today = new Date().toLocaleDateString("ru-RU");
+  const list = [];
+  Object.keys(PLATFORMS).forEach(k=>{ if(!state.off.includes(k)) FORMATS.filter(f=>f.p===k && !state.hidden.includes(f.id)).forEach(f=>list.push(f)); });
+  const total = list.reduce((s,f)=>s+(+state.qty[f.id]||1),0);
+  const plats = [...new Set(list.map(f=>f.p))];
+  const facts = [["goal","Цель"],["geo","Гео и аудитория"],["budget","Бюджет и период"],["deadline","Срок сдачи креативов"],["lang","Языки"],["owner","Ответственный"],["url","Посадка"],["note","Комментарий"]]
+    .filter(([k])=>B[k]).map(([k,l])=>`<div class="${k==="note"||k==="url"?"wide":""}"><span>${l}</span><b>${esc(B[k])}</b></div>`).join("");
+  const ps = slug(B.project);
+  let h = `<h1>ТЗ на рекламные креативы${B.project?": "+esc(B.project):""}</h1><p class="sub">Составлено ${today}</p>`;
+  if(facts) h += `<div class="facts">${facts}</div>`;
+  h += `<div class="stats"><div><b>${total}</b>креативов</div><div><b>${list.length}</b>форматов</div><div><b>${plats.length}</b>${plats.length===1?"платформа":"платформы"}</div></div>`;
+  if(!list.length) return h + `<p>Форматы не выбраны.</p>`;
+  h += `<div class="tbl"><table><thead><tr><th>Платформа</th><th>Формат</th><th>Пропорции и размер</th><th>Кол-во</th></tr></thead><tbody>` +
+    list.map(f=>`<tr><td><span class="pl" style="background:${PCOL[f.p]}"></span>${PLATFORMS[f.p].name}</td><td>${esc(f.name)}</td><td>${f.ratios?f.ratios.map(r=>r+" ("+sizeOf(f,r)+")").join(", "):(f.kind==="text"?"Текст":"Каталог / шаблон")}</td><td class="q">${+state.qty[f.id]||1}</td></tr>`).join("") +
+    `</tbody></table></div>`;
+  if(list.some(f=>SAFE[f.id])) h += `<div class="legend"><i></i>Заштрихованная область перекрывается интерфейсом — не размещать там текст, логотип и кнопки (границы приблизительные).</div>`;
+  plats.forEach(k=>{
+    h += `<h2 style="--c:${PCOL[k]}">${PLATFORMS[k].name}</h2>`;
+    list.filter(f=>f.p===k).forEach(f=>{
+      const q = +state.qty[f.id]||1;
+      const fname = f.ratios ? `${ps}_${k}_${f.id.split("-").slice(1).join("-")}_${f.ratios[0].replace(":","x")}_v1` : "";
+      h += `<div class="fmt" style="--c:${PCOL[k]}"><div class="vis">${mockups(f)}</div><div>
+        <div class="head"><h3>${esc(f.name)}</h3><span class="qb">${q} шт.</span></div>
+        <p class="desc">${esc(f.desc)}</p>
+        <dl>${f.specs.map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("")}</dl>
+        ${state.notes[f.id]?`<div class="cm"><b>Комментарий:</b> ${esc(state.notes[f.id])}</div>`:""}
+        ${f.flag?`<div class="warn">⚠ ${esc(f.flag)}</div>`:""}
+        ${fname?`<div class="fn">Имя файла: <code>${esc(fname)}</code></div>`:""}
+        <div class="check"><span>Сделано</span><span>Согласовано</span><span>Загружено в кабинет</span></div>
+      </div></div>`;
+    });
+  });
+  h += `<div class="foot">Требования платформ меняются — перед загрузкой сверьте с актуальной справкой Meta, TikTok и Google Ads.</div>`;
+  return h;
+}
+
+
+// ===== Превью: как объявление выглядит в приложении =====
+const IC = {
+  heart:'<path d="M12 20s-7-4.4-9.3-8.7A5 5 0 0 1 12 6.3a5 5 0 0 1 9.3 5C19 15.6 12 20 12 20z"/>',
+  comment:'<path d="M4 5h16v11H9l-5 4z"/>',
+  share:'<path d="M3 11l18-7-7 18-2.5-8.5z"/>',
+  save:'<path d="M6 3h12v18l-6-4-6 4z"/>',
+  search:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
+  play:'<path d="M8 5v14l11-7z"/>'
+};
+const ic = (n, fill) => `<svg viewBox="0 0 24 24" class="ic" fill="${fill?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${IC[n]}</svg>`;
+const ar = r => r.replace(":","/");
+function crv(f, r, label, extra){
+  const c = PCOL[f.p];
+  return `<div class="cr" style="aspect-ratio:${ar(r)};background:linear-gradient(150deg,${c} 0%,${c}B0 50%,#FFB45A 100%)"><span>${label}<small>${r} · ${sizeOf(f,r)}</small></span>${extra||""}</div>`;
+}
+const brandN = () => esc(state.brief.project ? state.brief.project.split(/[—–-]/)[0].trim().slice(0,22) : "Ваш бренд");
+const fhead = (sub) => `<div class="fh"><i class="av"></i><div><b>${brandN()}</b><small>${sub||"Реклама"}</small></div><span class="more">⋯</span></div>`;
+const cta = (t) => `<div class="ctab"><span>${t}</span><span>›</span></div>`;
+const acts = () => `<div class="acts">${ic("heart")}${ic("comment")}${ic("share")}<span style="flex:1"></span>${ic("save")}</div>`;
+const caption = () => `<div class="cap"><b>${brandN()}</b> Основной текст объявления — первые строки видны сразу, остальное под «ещё»</div>`;
+const STATUS = `<div class="sbar-i"><span>9:41</span><span class="r"><svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor"><rect x="0" y="7" width="3" height="3" rx="1"/><rect x="4.3" y="5" width="3" height="5" rx="1"/><rect x="8.6" y="2.5" width="3" height="7.5" rx="1"/><rect x="12.9" y="0" width="3" height="10" rx="1"/></svg><svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.6a9 9 0 0 1 12 0M3.3 6a5.6 5.6 0 0 1 7.4 0"/><circle cx="7" cy="8.6" r="1" fill="currentColor" stroke="none"/></svg><svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x=".5" y=".5" width="20" height="10" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor"/><path d="M22 3.6v3.8c.9-.3 1.3-1 1.3-1.9s-.4-1.6-1.3-1.9z" fill="currentColor" opacity=".4"/></svg></span></div><i class="island"></i>`;
+const phone = (inner, dark) => `<div class="phone${dark?" dark":""}"><div class="scr">${STATUS}${inner}</div></div>`;
+function vert(f, overlay, label){
+  const s = SAFE[f.id]; const c = PCOL[f.p];
+  const zones = s ? `${s.t?`<i class="sz" style="top:0;height:${s.t}%;left:0;right:0"></i>`:""}${s.b?`<i class="sz" style="bottom:0;height:${s.b}%;left:0;right:0"></i>`:""}${s.r?`<i class="sz" style="top:${s.t||0}%;bottom:${s.b||0}%;right:0;width:${s.r}%"></i>`:""}` : "";
+  return phone(`<div class="vv" style="background:linear-gradient(165deg,${c} 0%,${c}A0 45%,#FFB45A 100%)">
+    <div class="vlab">${label||"Ваш креатив"}<small>9:16 · ${sizeOf(f,"9:16")}</small></div>${overlay}${zones}</div>`, true);
+}
+const rightRail = (counts) => `<div class="rail"><i class="av big"></i><span>${ic("heart",true)}${counts?"<em>12,4K</em>":""}</span><span>${ic("comment",true)}${counts?"<em>318</em>":""}</span><span>${ic("share",true)}${counts?"<em>96</em>":""}</span></div>`;
+const vbottom = (f, ctaText, music) => `<div class="vb"><b>@${brandN().toLowerCase().replace(/\s+/g,"")}</b> <span class="tag">Реклама</span><p>Текст объявления до 100 символов #хэштег</p>${music?`<p class="mus">♪ Промо-музыка</p>`:""}<div class="vcta" style="background:${PCOL[f.p]}">${ctaText}</div></div>`;
+const player = (f, opts) => `<div class="pl">${crv(f,"16:9","Видео")}<span class="badge">Реклама · ${opts.time}</span>${opts.skip?`<span class="skip">Пропустить ▸|</span>`:""}<i class="prog"></i></div>
+  <div class="comp"><i class="av"></i><div><b>${brandN()}</b><small>Реклама · site.kz</small></div><span class="btnb">Перейти</span></div>
+  <div class="lines"><i style="width:90%"></i><i style="width:60%"></i></div>`;
+const serpAd = () => `<div class="serp"><small>Реклама · <b>site.kz</b></small><div class="sh">Заголовок 1 — Заголовок 2 | Заголовок 3</div><div class="sd">Описание до 90 символов о вашем предложении. Второе описание с выгодой и призывом.</div><div class="sl"><span>Цены</span><span>Контакты</span><span>Отзывы</span></div></div>`;
+const searchBar = (q) => `<div class="sbar">${ic("search")}<span>${q}</span></div>`;
+const formBox = (f) => `<div class="form"><b>Оставьте заявку</b><small>Поля заполнятся из профиля</small><i>Имя</i><i>Телефон</i><i>Ваш вопрос</i><div class="fbtn" style="background:${PCOL[f.p]}">Отправить</div></div>`;
+const products = (n) => `<div class="prods">${Array.from({length:n},(_,i)=>`<div class="pr"><i></i><b>Товар ${i+1}</b><span>12 990 ₸</span></div>`).join("")}</div>`;
+
+const PREVIEW = {
+  "m-img": f => phone(fhead() + crv(f,"4:5","Изображение") + cta("Подробнее") + acts() + caption()),
+  "m-vid": f => phone(fhead() + crv(f,"4:5","Видео",`<span class="playb">${ic("play",true)}</span><span class="dur">0:15</span>`) + cta("Смотреть ещё") + acts() + caption()),
+  "m-carousel": f => phone(fhead() + `<div class="car">${crv(f,"1:1","Карточка 1")}${crv(f,"1:1","Карточка 2")}</div><div class="car-t"><b>Заголовок карточки</b><span class="btnb">Купить</span></div><div class="dotsr"><i class="on"></i><i></i><i></i><i></i></div>` + caption()),
+  "m-collection": f => phone(fhead() + crv(f,"16:9","Обложка") + `<div class="grid4">${[1,2,3,4].map(()=>`<i></i>`).join("")}</div>` + cta("В магазин")),
+  "m-dpa": f => phone(fhead("Реклама · Каталог") + products(3) + caption()),
+  "m-lead": f => phone(fhead() + crv(f,"16:9","Креатив") + cta("Подать заявку") + formBox(f)),
+  "m-ctm": f => phone(fhead() + crv(f,"1:1","Креатив") + `<div class="ctab wa"><span>${ic("comment")} Отправить сообщение</span><span>›</span></div>` + caption()),
+  "m-stories": f => vert(f, `<div class="prog-top"><i></i><i></i></div><div class="vh"><i class="av"></i><b>${brandN()}</b><small>Реклама</small></div><div class="swipe">⌃<span>Подробнее</span></div>`),
+  "m-reels": f => vert(f, rightRail(false) + `<div class="vb"><b>${brandN()}</b> <span class="tag">Реклама</span><p>Основной текст объявления…</p><div class="vcta light">Подробнее ›</div></div>`),
+  "t-infeed": f => vert(f, rightRail(false) + vbottom(f,"Подробнее",true)),
+  "t-spark": f => vert(f, rightRail(true) + vbottom(f,"Подробнее",true), "Пост с вашего аккаунта"),
+  "t-carousel": f => vert(f, rightRail(false) + `<div class="cdots"><i class="on"></i><i></i><i></i><i></i></div>` + vbottom(f,"Подробнее",true), "Изображение 1 из N"),
+  "t-topview": f => vert(f, `<div class="vtop">Показ при открытии приложения</div>` + rightRail(false) + vbottom(f,"Подробнее",false)),
+  "t-takeover": f => vert(f, `<div class="vtop"><span class="tag">Реклама</span><span class="skip2">Пропустить 3</span></div>`, "Заставка 3–5 сек"),
+  "t-effect": f => vert(f, `<div class="tray"><i></i><i></i><i class="on" style="border-color:${PCOL[f.p]}"></i><i></i><i></i></div><div class="trayl">Ваш эффект</div>`, "Камера пользователя"),
+  "t-lead": f => phone(`<div class="vtop light">Мгновенная страница</div>` + crv(f,"16:9","Обложка") + formBox(f)),
+  "g-rsa": f => phone(searchBar("ваш запрос") + serpAd() + `<div class="org"><i style="width:40%"></i><i style="width:85%"></i><i style="width:70%"></i></div>`),
+  "g-rda": f => phone(`<div class="lines"><i style="width:80%;height:9px"></i><i style="width:95%"></i><i style="width:88%"></i></div><div class="banner"><small>Реклама</small>${crv(f,"1.91:1","Изображение")}<div class="bt"><i class="logo"></i><b>Короткий заголовок</b><span class="btnb">Открыть</span></div></div><div class="lines"><i style="width:92%"></i><i style="width:70%"></i></div>`),
+  "g-skip": f => phone(player(f,{time:"0:12",skip:true})),
+  "g-nonskip": f => phone(player(f,{time:"0:15",skip:false})),
+  "g-bumper": f => phone(player(f,{time:"0:06",skip:false})),
+  "g-infeed": f => phone(searchBar("ваш запрос") + `<div class="yt">${crv(f,"16:9","Превью",`<span class="dur">2:30</span>`)}<div class="ytt"><i class="av"></i><div><b>Заголовок видео до 100 символов</b><small>Реклама · ${brandN()}</small></div></div></div><div class="lines"><i style="width:90%"></i></div>`),
+  "g-shorts": f => vert(f, rightRail(false) + `<div class="vb"><b>${brandN()}</b> <span class="tag">Реклама</span><p>Заголовок объявления</p><div class="vcta" style="background:#fff;color:#111">Перейти на сайт</div></div>`),
+  "g-dg": f => phone(`<div class="dg">${crv(f,"1.91:1","Изображение")}<div class="dgt"><b>Заголовок до 40 символов</b><small>Реклама · ${brandN()}</small></div><div class="dgb"><span class="btnb">Подробнее</span></div></div><div class="lines"><i style="width:85%"></i><i style="width:60%"></i></div>`),
+  "g-pmax": f => phone(`<div class="pm-l">Поиск</div>` + serpAd() + `<div class="pm-l">YouTube</div><div class="pl sm">${crv(f,"16:9","Видео")}<span class="badge">Реклама</span></div><div class="pm-l">Сайты-партнёры</div><div class="banner">${crv(f,"1.91:1","Баннер")}</div>`),
+  "g-shopping": f => phone(searchBar("купить товар") + `<div class="pm-l">Спонсорские товары</div>` + products(3) + serpAd())
+};
+
+function previewHTML(f){
+  const fn = PREVIEW[f.id]; if(!fn) return "";
+  const vertical = f.ratios && f.ratios[0]==="9:16";
+  return `<div class="pv${vertical?" vert":""}">${fn(f)}${SAFE[f.id] && vertical ? `<label class="szt"><input type="checkbox" data-safe> Зоны интерфейса</label>` : ""}</div>`;
+}
+
+const KEY = "adformats:v1";
+let state = {hidden:[], off:[], qty:{}, notes:{}, brief:{}};
+try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && Array.isArray(s.hidden)) state = {hidden:s.hidden, off:s.off||[], qty:s.qty||{}, notes:s.notes||{}, brief:s.brief||{}, openGroups:s.openGroups||[]}; }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+const openRows = new Set();
+if(!Array.isArray(state.openGroups)) state.openGroups = [];
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const qOf = id => +state.qty[id] || 1;
+const active = () => { const L=[]; Object.keys(PLATFORMS).forEach(k=>{ if(!state.off.includes(k)) FORMATS.filter(f=>f.p===k && !state.hidden.includes(f.id)).forEach(f=>L.push(f)); }); return L; };
+
+function render(){
+  document.getElementById("chips").innerHTML = Object.entries(PLATFORMS).map(([k,p])=>{
+    const n = FORMATS.filter(f=>f.p===k && !state.hidden.includes(f.id)).length;
+    return `<button class="chip" data-toggle="${k}" aria-pressed="${!state.off.includes(k)}"><span class="dot" style="background:${p.color}"></span>${p.name} <span class="n">${n}</span></button>`;
+  }).join("") + (state.hidden.length ? `<button class="chip" data-goto="hiddenWrap">Скрытые <span class="n">${state.hidden.length}</span></button>` : "")
+    + `<button class="chip" data-goto="s3">К ТЗ ↓</button>`;
+
+  const groups = Object.entries(PLATFORMS).filter(([k])=>!state.off.includes(k)).map(([k,p])=>{
+    const items = FORMATS.filter(f=>f.p===k && !state.hidden.includes(f.id));
+    const q = items.reduce((s,f)=>s+qOf(f.id),0);
+    const isOpen = state.openGroups.includes(k);
+    return `<section class="group${isOpen?" open":""}" style="--c:${p.color}">
+      <button class="gh" data-group="${k}" aria-expanded="${isOpen}"><span class="dot"></span><b>${p.name}</b><small>${items.length ? `${items.length} форм. · <span class="gq">${q} креат.</span>` : "все скрыты"}</small><span class="chev" aria-hidden="true">▾</span></button>
+      <div class="gb">${items.map(f=>`<div class="row${openRows.has(f.id)?" open":""}" style="--c:${p.color}">
+        <div class="rh">
+          <button class="tgl" data-open="${f.id}" aria-expanded="${openRows.has(f.id)}">
+            <span class="nm">${esc(f.name)}</span>
+            <span class="rt">${f.ratios ? f.ratios.join(", ") + " · " + (sizeOf(f,f.ratios[0])) : (f.kind==="text" ? "Текст" : "Каталог / шаблон")}</span>
+          </button>
+          <div class="step-q" role="group" aria-label="Количество: ${esc(f.name)}">
+            <button data-dec="${f.id}" aria-label="Меньше">−</button><output>${qOf(f.id)}</output><button data-inc="${f.id}" aria-label="Больше">+</button>
+          </div>
+          <button class="rm" data-remove="${f.id}" aria-label="Убрать «${esc(f.name)}»">×</button>
+        </div>
+        <div class="rb"><div class="rbg"><div class="pvslot" data-pv="${f.id}">${openRows.has(f.id) ? previewHTML(f) : ""}</div><div>
+          <p>${esc(f.desc)}</p>
+          <dl>${f.specs.map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("")}</dl>
+          ${f.flag ? `<div class="flag">⚠ ${esc(f.flag)}</div>` : ""}
+          <input data-note="${f.id}" value="${esc(state.notes[f.id]||"")}" placeholder="Комментарий для дизайнера" aria-label="Комментарий: ${esc(f.name)}">
+        </div></div></div>
+      </div>`).join("")}</div>
+    </section>`;
+  }).join("");
+  document.getElementById("list").innerHTML = groups || `<p class="empty">Все платформы выключены. Включите нужную в панели сверху.</p>`;
+
+  const hf = FORMATS.filter(f=>state.hidden.includes(f.id));
+  document.getElementById("hiddenWrap").innerHTML = hf.length ? `<div class="hidden-list">${hf.map(f=>`<button class="restore" style="--c:${PLATFORMS[f.p].color}" data-restore="${f.id}"><b>${PLATFORMS[f.p].name}</b> ${esc(f.name)} ↺</button>`).join("")}<button class="ghost" data-reset>Вернуть все</button></div>` : "";
+  updateOutputs();
+}
+
+const BRIEF = [["project","Проект"],["goal","Цель"],["geo","Гео и аудитория"],["budget","Бюджет и период"],["url","Посадка"],["deadline","Срок сдачи креативов"],["lang","Языки"],["owner","Ответственный"],["note","Комментарий"]];
+function textTZ(){
+  const L = ["ТЗ НА РЕКЛАМНЫЕ КРЕАТИВЫ" + (state.brief.project ? " — " + state.brief.project : ""), ""];
+  BRIEF.forEach(([k,l])=>{ if(k!=="project" && state.brief[k]) L.push(l + ": " + state.brief[k]); });
+  let total = 0;
+  Object.entries(PLATFORMS).forEach(([k,p])=>{
+    const items = active().filter(f=>f.p===k); if(!items.length) return;
+    L.push("", "━━ " + p.name.toUpperCase() + " ━━");
+    items.forEach((f,i)=>{
+      const q = qOf(f.id); total += q;
+      L.push("", (i+1) + ". " + f.name + " — " + q + " шт.");
+      if(f.ratios) L.push("   Пропорции: " + f.ratios.map(r=>r+" ("+sizeOf(f,r)+")").join(", "));
+      f.specs.forEach(([a,b])=>L.push("   " + a + ": " + b));
+      if(f.flag) L.push("   ⚠ " + f.flag);
+      if(state.notes[f.id]) L.push("   Комментарий: " + state.notes[f.id]);
+    });
+  });
+  L.push("", "Всего креативов: " + total);
+  return L.join("\n");
+}
+let tzTimer;
+function updateOutputs(){
+  const list = active(), total = list.reduce((s,f)=>s+qOf(f.id),0);
+  document.getElementById("sum").innerHTML = `<b>${total} креативов</b>${list.length} форматов`;
+  clearTimeout(tzTimer);
+  tzTimer = setTimeout(()=>{
+    document.getElementById("tz").value = textTZ();
+    MKID = 0; document.getElementById("tzvis").innerHTML = tzHTML();
+  }, 120);
+}
+
+function toast(msg){
+  const st = document.getElementById("status"); st.textContent = msg; st.classList.add("on");
+  clearTimeout(st._t); st._t = setTimeout(()=>st.classList.remove("on"), 3500);
+}
+
+document.addEventListener("click", e=>{
+  const t = e.target.closest("button"); if(!t) return;
+  const d = t.dataset;
+  if(d.group){ const k = d.group, sec = t.closest(".group");
+    state.openGroups = state.openGroups.includes(k) ? state.openGroups.filter(x=>x!==k) : [...state.openGroups, k];
+    sec.classList.toggle("open"); t.setAttribute("aria-expanded", sec.classList.contains("open")); save(); }
+  else if(d.open){ openRows.has(d.open) ? openRows.delete(d.open) : openRows.add(d.open);
+    const row = t.closest(".row"); row.classList.toggle("open"); t.setAttribute("aria-expanded", row.classList.contains("open"));
+    const slot = row.querySelector(".pvslot"); if(row.classList.contains("open") && !slot.innerHTML){ slot.innerHTML = previewHTML(FORMATS.find(x=>x.id===d.open)); } }
+  else if(d.inc || d.dec){
+    const id = d.inc || d.dec; state.qty[id] = Math.max(1, Math.min(99, qOf(id) + (d.inc ? 1 : -1)));
+    t.parentElement.querySelector("output").textContent = state.qty[id];
+    const grp = t.closest(".group"), k = FORMATS.find(f=>f.id===id).p;
+    grp.querySelector(".gh .gq").textContent = FORMATS.filter(f=>f.p===k && !state.hidden.includes(f.id)).reduce((s,f)=>s+qOf(f.id),0) + " креат.";
+    save(); updateOutputs();
+  }
+  else if(d.remove){ state.hidden.push(d.remove); openRows.delete(d.remove); save(); render(); toast("Формат скрыт. Вернуть можно под списком."); }
+  else if(d.restore){ state.hidden = state.hidden.filter(x=>x!==d.restore); save(); render(); }
+  else if("reset" in d){ state.hidden = []; save(); render(); }
+  else if(d.toggle){ const k=d.toggle; state.off = state.off.includes(k) ? state.off.filter(x=>x!==k) : [...state.off,k]; save(); render(); }
+  else if(d.goto){ document.getElementById(d.goto).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth"}); }
+  else if(d.tab){ const v = d.tab==="vis";
+    document.querySelectorAll("[data-tab]").forEach(b=>b.setAttribute("aria-selected", String(b===t)));
+    document.getElementById("pane-vis").hidden = !v; document.getElementById("pane-txt").hidden = v; }
+  else if("copy" in d){ copyTZ(); }
+  else if("pdf" in d){ makePDF(t); }
+});
+document.addEventListener("change", e=>{
+  if(e.target.matches("[data-safe]")) e.target.closest(".pv").classList.toggle("safe", e.target.checked);
+});
+document.addEventListener("input", e=>{
+  const t = e.target;
+  if(t.id && t.id.startsWith("b-")){ state.brief[t.id.slice(2)] = t.value;
+    if(t.id==="b-project") document.querySelectorAll(".row.open .pvslot").forEach(s=>{ s.innerHTML = previewHTML(FORMATS.find(x=>x.id===s.dataset.pv)); }); }
+  else if(t.dataset.note !== undefined) state.notes[t.dataset.note] = t.value;
+  else return;
+  save(); updateOutputs();
+});
+
+async function copyTZ(){
+  const txt = textTZ();
+  try{ await navigator.clipboard.writeText(txt); toast("Скопировано — вставьте в Telegram или почту."); }
+  catch(e){
+    document.querySelector('[data-tab="txt"]').click();
+    const ta = document.getElementById("tz"); ta.value = txt; ta.focus(); ta.select();
+    let ok=false; try{ ok = document.execCommand("copy"); }catch(_){}
+    toast(ok ? "Скопировано." : "Текст выделен — скопируйте его вручную.");
+  }
+}
+
+let downloads = null;
+(async()=>{ try{ if(window.claude && window.claude.use) downloads = await window.claude.use("downloads"); }catch(e){} })();
+
+let libPromise = null;
+function loadLib(){
+  if(window.html2pdf) return Promise.resolve();
+  if(!libPromise) libPromise = new Promise((res,rej)=>{
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+    s.onload = res; s.onerror = ()=>{ libPromise = null; rej(new Error("lib")); };
+    document.head.appendChild(s);
+  });
+  return libPromise;
+}
+async function makePDF(btn){
+  if(!downloads){ toast("Скачивание недоступно в этом просмотре. Используйте копирование текста."); return; }
+  if(!active().length){ toast("Выберите хотя бы один формат."); return; }
+  btn.disabled = true; const label = btn.textContent; btn.textContent = "Готовлю…";
+  const host = document.createElement("div");
+  host.style.cssText = "position:fixed;left:-10000px;top:0;width:794px;background:#fff";
+  MKID = 1000;
+  host.innerHTML = `<div class="tzdoc pdf">${tzHTML()}</div>`;
+  document.body.appendChild(host);
+  try{
+    await loadLib();
+    if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    const blob = await html2pdf().set({
+      margin:[10,8,12,8], image:{type:"jpeg", quality:0.95},
+      html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff", windowWidth:794},
+      jsPDF:{unit:"mm", format:"a4", orientation:"portrait"},
+      pagebreak:{mode:["css","legacy"], avoid:[".fmt",".facts","tr",".stats"]}
+    }).from(host.firstElementChild).outputPdf("blob");
+    await downloads.save({filename: "tz-" + slug(state.brief.project) + ".pdf", data: blob});
+    toast("PDF сохранён.");
+  }catch(e){
+    if(!(e && e.code==="declined")) toast(e && e.message==="lib" ? "Не удалось загрузить модуль PDF. Проверьте интернет." : "Не удалось создать PDF. Попробуйте ещё раз.");
+  }finally{
+    host.remove(); btn.disabled = false; btn.textContent = label;
+  }
+}
+
+function fillBrief(){ BRIEF.forEach(([k])=>{ const el=document.getElementById("b-"+k); if(el) el.value = state.brief[k]||""; }); }
+document.head.insertAdjacentHTML("beforeend", "<style>" + TZCSS + ".tzdoc.pdf{border-radius:0;padding:4px 6px;max-width:none}.tzdoc.pdf .fmt{grid-template-columns:220px 1fr}</style>");
+fillBrief();
+render();
+</script>
+</body>
+</html>
